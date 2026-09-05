@@ -1,0 +1,14 @@
+{
+  "timestamp": "20260905_223942",
+  "total_processed": 34,
+  "total_ideas": 0,
+  "hot_leads": 0,
+  "warm_leads": 34,
+  "cold_leads": 0,
+  "by_help_needed": {
+    "online presence": 34
+  },
+  "by_budget": {
+    "medium": 34
+  }
+}
