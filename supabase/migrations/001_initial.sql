@@ -13,7 +13,7 @@ CREATE TABLE IF NOT EXISTS leads (
   location text,
   source text,
   source_url text,
-  help_needed text NOT DEFAULT 'online presence',
+  help_needed text NOT NULL DEFAULT 'online presence',
   urgency integer DEFAULT 5,
   budget text DEFAULT 'medium',
   opening_line text,
