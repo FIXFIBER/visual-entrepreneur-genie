@@ -38,7 +38,8 @@ def call_kilo(messages, max_tokens=500):
 def save_to_supabase(table, data):
     """Save data to Supabase."""
     if not SUPABASE_KEY:
-        return
+        print("No SUPABASE_KEY set")
+        return False
     try:
         url = f"{SUPABASE_URL}/rest/v1/{table}"
         headers = {
@@ -48,7 +49,12 @@ def save_to_supabase(table, data):
             "Prefer": "return=minimal",
         }
         r = requests.post(url, headers=headers, json=data, timeout=10)
-        return r.status_code in [200, 201]
+        if r.status_code in [200, 201]:
+            print(f"  Saved to {table}: {data.get('name', data.get('title', 'unknown'))}")
+            return True
+        else:
+            print(f"  ERROR saving to {table}: {r.status_code} {r.text}")
+            return False
     except Exception as e:
         print(f"Supabase error: {e}")
         return False
@@ -136,6 +142,7 @@ def run():
     
     print(f"Analyzing {len(leads)} leads...")
     processed = []
+    saved_count = 0
     for i, lead in enumerate(leads):
         print(f"  [{i+1}/{len(leads)}] {lead.get('name', 'Unknown')[:50]}...")
         analysis = analyze_lead(lead)
@@ -166,20 +173,23 @@ def run():
             "score": lead['score'],
             "status": "new",
         }
-        save_to_supabase("leads", supabase_lead)
+        if save_to_supabase("leads", supabase_lead):
+            saved_count += 1
         processed.append(lead)
         time.sleep(0.5)
     
     # Generate and save ideas
     print("Generating business ideas...")
+    ideas_saved = 0
     for i in range(3):
         idea = generate_idea(processed)
         if idea:
-            save_to_supabase("ideas", idea)
+            if save_to_supabase("ideas", idea):
+                ideas_saved += 1
         time.sleep(1)
     
-    print(f"\n[DONE] {len(processed)} leads processed and saved to Supabase")
-    print(f"[DONE] Ideas generated and saved to Supabase")
+    print(f"\n[DONE] {saved_count}/{len(processed)} leads saved to Supabase")
+    print(f"[DONE] {ideas_saved} ideas saved to Supabase")
 
 if __name__ == '__main__':
     run()
