@@ -20,6 +20,8 @@ jobs:
       - name: Run AI Processor
         env:
           KILO_API_KEY: ${{ secrets.KILO_API_KEY }}
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_KEY: ${{ secrets.SUPABASE_KEY }}
         run: python .github/scripts/ai_process.py
       - name: Commit Data
         run: |
