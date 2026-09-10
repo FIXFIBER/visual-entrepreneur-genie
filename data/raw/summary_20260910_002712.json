@@ -1,0 +1,18 @@
+{
+  "timestamp": "20260910_002712",
+  "total_leads": 32,
+  "total_sources": 75,
+  "by_source": {
+    "search_engine": 32
+  },
+  "by_category": {
+    "salon no website lagos": 4,
+    "restaurant no website nigeria": 4,
+    "law firm no website lagos": 5,
+    "dentist no website lagos": 3,
+    "contractor no website nigeria": 3,
+    "cleaning business no website lagos": 3,
+    "real estate agent no website lagos": 5,
+    "musician no website soundcloud": 5
+  }
+}
